@@ -1,0 +1,20 @@
+name: 'Automated_NLP_News_Verification_Pipeline'
+version: '1.0.0'
+profile: 'Automated_NLP_News_Verification_Pipeline'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+# THIS KEY MUST EXACTLY MATCH THE 'name' AT THE TOP
+models:
+  Automated_NLP_News_Verification_Pipeline:
+    example:
+      +materialized: view

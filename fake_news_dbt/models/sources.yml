@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: raw
+    database: FAKE_NEWS_DB
+    schema: RAW
+    tables:
+      - name: RAW_NEWS_DATA
+        description: "Raw, uncleaned news articles ingested from S3"
