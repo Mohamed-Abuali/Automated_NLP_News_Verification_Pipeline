@@ -29,9 +29,11 @@ def upload_to_s3():
 def load_to_snowflakes():
     print('\n Connecting to snowflake')
     try:
+        passphrase = os.getenv("DBT_PRIVATE_KEY_PASSPHRASE")
         ctx = snowflake.connector.connect(
             user=os.getenv("SNOWFLAKE_USER"),
-            private_key_file=os.path.join(os.path.dirname(__file__), '..', 'rsa_key.p8'),
+            private_key_file='/opt/airflow/dbt/rsa_key.p8',
+            private_key_passphrase=passphrase,
             account=os.getenv("SNOWFLAKE_ACCOUNT"),
             database=os.getenv("SNOWFLAKE_DATABASE"),
             schema=os.getenv("SNOWFLAKE_SCHEMA"),
@@ -44,7 +46,11 @@ def load_to_snowflakes():
 
         copy_sql = f"""
             COPY INTO RAW_NEWS_DATA
-            FROM @FAKE_NEWS_DB.RAW.S3_NEWS_DATA/{S3_FILE_KEY}
+            FROM @FAKE_NEWS_DB.RAW```bash
+openssl genrsa 2048 | openssl pkcs8 -topk8 -v2 des3 -inform PEM -out rsa_key.p8
+``````bash
+openssl genrsa 2048 | openssl pkcs8 -topk8 -v2 des3 -inform PEM -out rsa_key.p8
+```.S3_NEWS_DATA/{S3_FILE_KEY}
             FILE_FORMAT = (FORMAT_NAME = 'CSV_FORMAT')
             ON_ERROR = 'CONTINUE';
         
