@@ -2,3 +2,11 @@
 
 rsa_key.p8
 rsa_key.pub
+
+.env
+__pycache__/
+*.pkl
+logs/
+target/
+dbt_packages/
+venv/
